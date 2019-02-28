@@ -83,6 +83,21 @@ def index():
    return "%s"%li[0]
 
 
+@app.route('/users')
+def getUsers():
+   user_list =[]
+   all_users = User.query.all()
+   for user in all_users:
+      user_element = [f"Uid :{user.uid}",f"Time: {user.timestamp}",f"Lat:{user.lat}",f"Lon:{user.lon}",f"flu:{user.hasflu}"]
+      user_list.append(user_element) 
+      
+   return jsonify(user_list)   
+   
+      
+
+
+
+
 def makedb():
    db.create_all()
 
