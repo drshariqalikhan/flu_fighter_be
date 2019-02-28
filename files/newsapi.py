@@ -5,7 +5,7 @@ import json
 def getNewsUpdates():
 
    all_article_List =[]
-   for x in range(2):
+   for x in range(4):
       url = "https://newsapi.org/v2/everything?apiKey=f8099a1195b644778418d27ede3071f9&q=flu OR influenza &pageSize=100&sortBy=relevancy&page=%s"%x
       r= requests.get(url)
       json_data = json.loads(r.text)
