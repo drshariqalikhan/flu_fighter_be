@@ -4,7 +4,7 @@ import requests
 import os
 import json
 from flask_sqlalchemy import SQLAlchemy
-# from sqlalchemy.dialects.postgresql import JSON
+from sqlalchemy.dialects.postgresql import JSON
 from files.newsapi import getNewsUpdates
 from files.geo import getCity
 from files.aboutflu import parseCsvFolder
@@ -17,30 +17,104 @@ app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_DEFAULT
 
 # app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 app.debug = True
+
 db = SQLAlchemy(app)
 
-@app.route('/')
-def index():
+###Models
 
-    
-    SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
-    folder_path = os.listdir(os.path.join(SITE_ROOT,'flucsv'))
-    li = parseCsvFolder(folder_path,SITE_ROOT)
-    return "%s"%li[0]
+class User(db.Model):
+
+
+   __tablename__ = 'user_table'
+
+   id = db.Column(db.Integer,primary_key = True)
+   uid = db.Column(db.String(80),unique = True)
+   timestamp = db.Column(db.DateTime)
+   lat = db.Column(db.Float)
+   lon = db.Column(db.Float)
+   hasflu = db.Column(db.Boolean)
+
+   def __init__(self,uid,timestamp,lat,lon,hasflu):
+
+      self.uid = uid
+      self.timestamp = timestamp
+      self.lat = lat
+      self.lon = lon
+      self.hasflu = hasflu
+
+   def __repr__(self):
+      return '<uid %r>' %self.uid
+
+class flunews(db.Model):
+
+
+   __tablename__ = 'news'
+
+   id = db.Column(db.Integer,primary_key = True)
+   newsjson = db.Column(db.JSON)
+
+   def __init__(self,newsjson):
+      self.newsjson = newsjson
+
+   def __repr__(self):
+      # return '%r' %self.
+      return self.newsjson
+
+class fludetail(db.Model):
+   __tablename__ = 'fludeatil'
+
+   id = db.Column(db.Integer,primary_key = True)
+   flujson = db.Column(db.JSON)
+
+   def __init__(self,flujson):
+      self.flujson = flujson
+
+   def __repr__(self):
+      return self.flujson
+
+
+#######
+
+@app.route('/')
+def index(): 
+   SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
+   folder_path = os.listdir(os.path.join(SITE_ROOT,'flucsv'))
+   li = parseCsvFolder(folder_path,SITE_ROOT)
+   return "%s"%li[0]
+
+
+def makedb():
+   db.create_all()
 
 
 #API to save Flu news
 @app.route('/n')
 def NewsApi():
-   pass
+
+
+   flunews.query.delete()
+   news_data = getNewsUpdates()     
+   y = json.dumps(news_data) #this is a json
+   mynews = flunews(y)
+   db.session.add(mynews)
+   db.session.commit()
+   return "news done"
    
 
 
 #API to save FLu Data
 @app.route('/d')
 def FluApi():
-   pass
    
+   fludetail.query.delete()
+   SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
+   folder_path = os.listdir(os.path.join(SITE_ROOT,'flucsv'))
+   flu_data = parseCsvFolder(folder_path,SITE_ROOT)
+   y = json.dumps(flu_data) #this is a json
+   myflu = fludetail(y)
+   db.session.add(myflu)
+   db.session.commit()
+   return "Flu done"
 
 @app.route('/f')
 def OneApi():

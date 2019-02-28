@@ -145,7 +145,7 @@ def parseCsvFolder(folder_path,site_root):
            
         except:
             pass
-    print (len(el))        
+    # print (len(el))        
 
     return el        
 
