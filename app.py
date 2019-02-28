@@ -28,11 +28,11 @@ class User(db.Model):
    __tablename__ = 'user_table'
 
    id = db.Column(db.Integer,primary_key = True)
-   uid = db.Column(db.String(80),unique = True)
+   uid = db.Column(db.String(80))
    timestamp = db.Column(db.DateTime)
    lat = db.Column(db.Float)
    lon = db.Column(db.Float)
-   hasflu = db.Column(db.Boolean)
+   hasflu = db.Column(db.String(80))
 
    def __init__(self,uid,timestamp,lat,lon,hasflu):
 
@@ -125,27 +125,29 @@ def OneApi():
    hasflu = request.args.get('hasflu')
    uid = request.args.get('uid')
    timestamp = datetime.datetime.now()
-   #   save to db table
-#    User.query.delete()
-#    user = User(uid,timestamp,lat,lon,hasflu)
-#    db.session.add(user)
-#    db.session.commit()
+   # save to db table
+   user = User(uid,timestamp,lat,lon,hasflu)
+   db.session.add(user)
+   db.session.commit()
 
    user_location = getCity(lat,lon)
    country = user_location[0]
    code = user_location[1]
-   l = getNewsUpdates() #comment out
+   # l = getNewsUpdates() #comment out
 
    #TODO: get l from db table
 
-#    data = flunews.query.first()
-#    l = json.loads(str(data)) #this is a dict
+   data = flunews.query.first()
+   l = json.loads(str(data)) #this is a dict
 
    #TODO: get d from db table
 
-   SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
-   folder_path = os.listdir(os.path.join(SITE_ROOT,'flucsv'))
-   d = parseCsvFolder(folder_path,SITE_ROOT)
+   fdata = fludetail.query.first()
+   d = json.loads(str(fdata)) #this is a dict
+
+   # SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
+   # folder_path = os.listdir(os.path.join(SITE_ROOT,'flucsv'))
+   # d = parseCsvFolder(folder_path,SITE_ROOT)
       
    data_out = {
 
