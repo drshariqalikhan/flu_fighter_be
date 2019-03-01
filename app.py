@@ -105,8 +105,9 @@ def getUsers():
          
       return jsonify(user_list)
    if request.method == 'POST':
-      User.query.delete()
-      return "user deleted"   
+      rows = User.query.delete()
+      db.session.commit()
+      return "%s deleted"%rows   
    
       
 
