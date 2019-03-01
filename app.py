@@ -93,7 +93,14 @@ def getUsers():
       for user in all_users:
 
 
-         user_element =[{f"Uid :{user.uid}",f"Time: {user.timestamp}",f"Lat:{user.lat}",f"Lon:{user.lon}",f"flu:{user.hasflu}"}]
+         user_element ={
+            'Uid' :f"{user.uid}",
+            'Time':f"{user.timestamp}",
+            'Lat':f"{user.lat}",
+            'Lon':f"{user.lon}",
+            'flu':f"{user.hasflu}"
+            }
+         
          user_list.append(user_element) 
          
       return jsonify(user_list)
