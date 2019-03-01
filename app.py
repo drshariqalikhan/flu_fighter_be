@@ -83,15 +83,20 @@ def index():
    return "%s"%li[0]
 
 
-@app.route('/users')
+@app.route('/users',methods = ['GET','POST'])
 def getUsers():
-   user_list =[]
-   all_users = User.query.all()
-   for user in all_users:
-      user_element = [f"Uid :{user.uid}",f"Time: {user.timestamp}",f"Lat:{user.lat}",f"Lon:{user.lon}",f"flu:{user.hasflu}"]
-      user_list.append(user_element) 
-      
-   return jsonify(user_list)   
+   if request.method == 'GET':
+      user_list =[]
+      all_users = User.query.all()
+      for user in all_users:
+
+         user_element ={f"Uid :{user.uid}",f"Time: {user.timestamp}",f"Lat:{user.lat}",f"Lon:{user.lon}",f"flu:{user.hasflu}"}
+         user_list.append(user_element) 
+         
+      return jsonify(user_list)
+   if request.method == 'POST':
+      User.query.delete()
+      return "user deleted"   
    
       
 
