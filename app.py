@@ -104,9 +104,9 @@ def getUsers():
          user_list.append(user_element) 
          
       return jsonify(user_list)
-   # if request.method == 'POST':
-   #    User.query.delete()
-   #    return "user deleted"   
+   if request.method == 'POST':
+      User.query.delete()
+      return "user deleted"   
    
       
 
