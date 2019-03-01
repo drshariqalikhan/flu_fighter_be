@@ -145,7 +145,15 @@ def FluApi():
    myflu = fludetail(y)
    db.session.add(myflu)
    db.session.commit()
+   sendNotif("FLU FIGHTER ASIA - NEW FLU UPDATES!!")
    return "Flu done"
+
+
+def sendNotif(data):
+   header = {"Content-Type": "application/json; charset=utf-8","Authorization": "Basic YzM0MDBlYTktN2FmNC00OWYzLThjMDUtNDU5ZmZiNDBmOTQ4"}
+   payload = {"app_id": "851420b5-ceed-445c-822e-078a4a19d9d5","included_segments": ["All"],"contents": {"en": "%s"%(data)}}
+   requests.post("https://onesignal.com/api/v1/notifications", headers=header, data=json.dumps(payload))
+
 
 @app.route('/f')
 def OneApi():
