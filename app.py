@@ -9,6 +9,9 @@ from files.newsapi import getNewsUpdates
 from files.geo import getCity
 from files.aboutflu import parseCsvFolder
 import datetime
+from geopy import distance
+from sqlalchemy import text #for raw sql 
+
 
 app = Flask(__name__)
 
@@ -19,6 +22,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 app.debug = True
 
 db = SQLAlchemy(app)
+
 
 ###Models
 
@@ -154,6 +158,19 @@ def sendNotif(data):
    payload = {"app_id": "851420b5-ceed-445c-822e-078a4a19d9d5","included_segments": ["All"],"contents": {"en": "%s"%(data)}}
    requests.post("https://onesignal.com/api/v1/notifications", headers=header, data=json.dumps(payload))
 
+def FluUsersNearBy(uiid,lat,lon,rad):
+  
+   sql = text("SELECT * FROM user_table WHERE timestamp >= CURRENT_TIMESTAMP - INTERVAL '7DAYS' AND hasflu = 'true' AND uid !="+f"'{uiid}'")
+   All_other_users_in_last_7_days_with_flu = db.engine.execute(sql).fetchall()
+   
+   flu_user_list = []
+   for flu_user in All_other_users_in_last_7_days_with_flu:
+      flu_user_location = (flu_user.lat,flu_user.lon)
+      uid_location = (lat,lon)
+      if distance.distance(flu_user_location, uid_location).km < rad :
+         flu_user_list.append(flu_user)
+   return len(flu_user_list)
+     
 
 @app.route('/f')
 def OneApi():
@@ -184,9 +201,9 @@ def OneApi():
    fdata = fludetail.query.first()
    d = json.loads(str(fdata)) #this is a dict
 
-   # SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
-   # folder_path = os.listdir(os.path.join(SITE_ROOT,'flucsv'))
-   # d = parseCsvFolder(folder_path,SITE_ROOT)
+   #TODO get flu users nearby
+   flu_users_nearby = FluUsersNearBy(uid,lat,lon,5)
+
       
    data_out = {
 
@@ -195,6 +212,7 @@ def OneApi():
       'code':code,
       'fludata': d,
       'news':l,
+      'fluNear':flu_users_nearby
       }
 
    return jsonify(data_out)
