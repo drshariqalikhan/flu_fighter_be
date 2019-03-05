@@ -164,11 +164,19 @@ def FluUsersNearBy(uiid,lat,lon,rad):
    All_other_users_in_last_7_days_with_flu = db.engine.execute(sql).fetchall()
    
    flu_user_list = []
+   flu_user_uid_list = []
+   # print( "ALL: %s"%All_other_users_in_last_7_days_with_flu)
    for flu_user in All_other_users_in_last_7_days_with_flu:
-      flu_user_location = (flu_user.lat,flu_user.lon)
-      uid_location = (lat,lon)
-      if distance.distance(flu_user_location, uid_location).km < rad :
-         flu_user_list.append(flu_user)
+      #make sure no duplicate uids
+      if flu_user.uid not in flu_user_uid_list:
+         #add to uid list
+         flu_user_uid_list.append(flu_user.uid)
+         #check for unique flu uid in location
+         flu_user_location = (flu_user.lat,flu_user.lon)
+         uid_location = (lat,lon)
+         if distance.distance(flu_user_location, uid_location).km < rad :
+            flu_user_list.append(flu_user)
+   # print("Unique: %s"%flu_user_list)         
    return len(flu_user_list)
      
 
@@ -208,6 +216,7 @@ def OneApi():
    data_out = {
 
 
+      'AdUnitID':'ca-app-pub-3940256099942544/6300978111',
       'country':country,
       'code':code,
       'fludata': d,
