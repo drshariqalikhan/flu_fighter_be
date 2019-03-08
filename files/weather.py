@@ -1,6 +1,6 @@
 import requests
 import json
-
+from collections import defaultdict
 
 
 def getWeather(lat,lon):
@@ -18,11 +18,24 @@ def getWeather(lat,lon):
     #get airquality
     air_quality_dict = json_data_q['data']['iaqi']
 
+  
+
+    airq = {
+        'co':air_quality_dict['co']['v'],
+        'o3':air_quality_dict['o3']['v'],
+        'pm10':air_quality_dict['pm10']['v'],
+        'pm25':air_quality_dict['pm25']['v'],
+        'so2':air_quality_dict['so2']['v'],
+        
+
+    }
+    airq = defaultdict(lambda: -1, airq)
+
 
 
     weatherData= {
         'forecast_list':weather_list[1:],
         'now':weather_list[0],
-        'air_quality_now':air_quality_dict
+        'air_quality_now':airq
     }
     return weatherData
