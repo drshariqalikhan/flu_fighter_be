@@ -10,6 +10,7 @@ from files.geo import getCity
 from files.aboutflu import parseCsvFolder
 import datetime
 from geopy import distance
+from files.weather import getWeather
 from sqlalchemy import text #for raw sql 
 
 
@@ -199,29 +200,31 @@ def OneApi():
    code = user_location[1]
    # l = getNewsUpdates() #comment out
 
-   #TODO: get l from db table
 
    data = flunews.query.first()
    l = json.loads(str(data)) #this is a dict
 
-   #TODO: get d from db table
 
    fdata = fludetail.query.first()
    d = json.loads(str(fdata)) #this is a dict
 
-   #TODO get flu users nearby
+   #get flu users nearby
    flu_users_nearby = FluUsersNearBy(uid,lat,lon,5)
+
+   #get location weather 
+   weather = getWeather(lat,lon)
 
       
    data_out = {
-
 
       'AdUnitID':'ca-app-pub-3940256099942544/6300978111',
       'country':country,
       'code':code,
       'fludata': d,
       'news':l,
-      'fluNear':flu_users_nearby
+      'fluNear':flu_users_nearby,
+      'weather':weather,
+
       }
 
    return jsonify(data_out)
