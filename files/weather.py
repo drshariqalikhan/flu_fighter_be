@@ -14,6 +14,7 @@ def getWeather(lat,lon):
 
     #get (8) 3hrly weather data
     weather_list = json_data_w['list']
+    city = json_data_w['city']
     
     #get airquality
     air_quality_dict = json_data_q['data']['iaqi']
@@ -36,6 +37,7 @@ def getWeather(lat,lon):
     weatherData= {
         'forecast_list':weather_list[1:],
         'now':weather_list[0],
+        'city':city,
         'air_quality_now':airq
     }
     return weatherData
