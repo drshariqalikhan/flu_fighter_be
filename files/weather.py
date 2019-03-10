@@ -1,7 +1,7 @@
 import requests
 import json
 from collections import defaultdict
-
+import time
 
 def getWeather(lat,lon):
 
@@ -32,11 +32,26 @@ def getWeather(lat,lon):
     }
     airq = defaultdict(lambda: -1, airq)
 
+    now =[]
+
+    Timenow = int(time.time())
+    diff = 3600*2.5 
+    for w in weather_list:
+        ts = w['dt']
+        d = abs(Timenow - ts)
+        print(d)
+        if d <= diff:
+            now = w
+            break
+
+
+
+
 
 
     weatherData= {
-        'forecast_list':weather_list[1:],
-        'now':weather_list[0],
+        'forecast_list':weather_list,
+        'now':now,
         'city':city,
         'air_quality_now':airq
     }
