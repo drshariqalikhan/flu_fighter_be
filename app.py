@@ -6,7 +6,7 @@ import json
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects.postgresql import JSON
 from files.newsapi import getNewsUpdates
-from files.geo import getCity
+from files.geo import getCity,getLatLon
 from files.aboutflu import parseCsvFolder
 import datetime
 from geopy import distance
@@ -230,6 +230,21 @@ def OneApi():
    return jsonify(data_out)
 
 
+@app.route('/city')
+def getCity():
+
+
+   searchTerm = request.args.get('q')
+   uid = request.args.get('uid')
+   timestamp = datetime.datetime.now()
+
+   #todo save in db 
+   
+
+   out = {
+      'result': getLatLon(searchTerm),
+   }
+   return jsonify(out)
 
 
 if __name__ == "__main__":

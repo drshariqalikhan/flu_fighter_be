@@ -14,3 +14,13 @@ def getCity(lat,lon):
         pass
     return dat
 
+def getLatLon(searchTerm):
+    
+    geolocator = Nominatim(user_agent="specify_your_app_name_here")
+    location = geolocator.geocode(searchTerm)
+    return location.raw
+
+        
+
+
+    
