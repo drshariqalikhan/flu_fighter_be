@@ -231,7 +231,7 @@ def OneApi():
 
 
 @app.route('/city')
-def getCity():
+def getCiti():
 
 
    searchTerm = request.args.get('q')
