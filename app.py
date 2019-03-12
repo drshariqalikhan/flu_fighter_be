@@ -229,6 +229,7 @@ def OneApi():
       'code':code,
       'fludata': flu_country_data,
       # 'news':l,
+      'news':{[]},
       'fluNear':flu_users_nearby,
       'weather':weather,
 
