@@ -15,13 +15,13 @@ def infoAbout(strain):
     if(strain == 'AH1N12009_Chart01_CategoryGroup2_Chart01_CategoryGroup3_Value_DataValue0'):
 
 
-        name = "Swine flu aka Influenza A (H1N1)pdm09"
+        name = "Influenza A (H1N1)pdm09"
         killRate = "26 (range 11-66) per 100,000"
         recovery_pd = "10 days"
         hospitalizationRate = "1 in 1000"
     if(strain == 'AH3_Chart01_CategoryGroup2_Chart01_CategoryGroup3_Value_DataValue0'):
 
-        name = "Hong Kong flu aka Influenza A (H3N2)"
+        name = "Influenza A (H3N2)"
         killRate = "1 in 100000"
         recovery_pd = "5 days"
         hospitalizationRate = "1 in 100000"
@@ -35,35 +35,35 @@ def infoAbout(strain):
 
     if(strain == 'AH1_Chart01_CategoryGroup2_Chart01_CategoryGroup3_Value_DataValue0'):
 
-        name = "Influenza A (H1) flu"
+        name = "Influenza A (H1)"
         killRate = "1 in 100000"
         recovery_pd = "5 days"
         hospitalizationRate = "1 in 100000"
 
     if(strain == 'ANOTSUBTYPED_Chart01_CategoryGroup2_Chart01_CategoryGroup3_Value_DataValue0'):
 
-        name = "Influenza A (not subtyped) flu"
+        name = "Influenza A (not subtyped)"
         killRate = "1 in 100000"
         recovery_pd = "5 days"
         hospitalizationRate = "1 in 100000"
 
     if(strain == 'BYAMAGATA_Chart01_CategoryGroup2_Chart01_CategoryGroup3_Value_DataValue0'):
 
-        name = "Type B Yamagata flu"
+        name = "Type B Yamagata"
         killRate = "1 in 100000"
         recovery_pd = "5 days"
         hospitalizationRate = "1 in 100000"
 
     if(strain == 'BVICTORIA_Chart01_CategoryGroup2_Chart01_CategoryGroup3_Value_DataValue0'):
 
-        name = "Type B Victoria flu"
+        name = "Type B Victoria"
         killRate = "1 in 100000"
         recovery_pd = "5 days"
         hospitalizationRate = "1 in 100000"
 
     if(strain == 'BNOTDETERMINED_Chart01_CategoryGroup2_Chart01_CategoryGroup3_Value_DataValue0'):
 
-        name = "Type B (not subtyped) flu"
+        name = "Type B (not subtyped)"
         killRate = "1 in 100000"
         recovery_pd = "5 days"
         hospitalizationRate = "1 in 100000"
@@ -133,7 +133,7 @@ def parseCsvFolder(folder_path,site_root):
 
             data_out = {
 
-                'country_name': code_to_county(country),
+                # 'country_name': code_to_county(country),
                 'country': country,
                 'alert':alert,
                 'trend':total_list,

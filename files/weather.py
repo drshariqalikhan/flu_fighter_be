@@ -21,14 +21,29 @@ def getWeather(lat,lon):
     #get airquality
     air_quality_dict = json_data_q['data']['iaqi']
 
-  
+    co=''
+    o3=''
+    pm10=''
+    pm25=''
+    so2=''
+
+    if 'co' in air_quality_dict:
+        co = air_quality_dict['co']['v']
+    if 'o3' in air_quality_dict:
+        o3 = air_quality_dict['o3']['v']
+    if 'pm10' in air_quality_dict:
+        pm10 = air_quality_dict['pm10']['v']
+    if 'pm25' in air_quality_dict:
+        pm25 = air_quality_dict['pm25']['v']
+    if 'so2' in air_quality_dict:
+        so2 = air_quality_dict['so2']['v']        
 
     airq = {
-        'co':air_quality_dict['co']['v'],
-        'o3':air_quality_dict['o3']['v'],
-        'pm10':air_quality_dict['pm10']['v'],
-        'pm25':air_quality_dict['pm25']['v'],
-        'so2':air_quality_dict['so2']['v'],
+        'co':co,
+        'o3':o3,
+        'pm10':pm10,
+        'pm25':pm25,
+        'so2':so2,
         
 
     }

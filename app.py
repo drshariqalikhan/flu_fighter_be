@@ -8,6 +8,7 @@ from sqlalchemy.dialects.postgresql import JSON
 from files.newsapi import getNewsUpdates
 from files.geo import getCity,getLatLon
 from files.aboutflu import parseCsvFolder
+from files.continent import Cont_dict
 import datetime
 from geopy import distance
 from files.weather import getWeather
@@ -17,9 +18,9 @@ from sqlalchemy import text #for raw sql
 app = Flask(__name__)
 
 DATABASE_DEFAULT = 'postgresql://postgres:14051976@localhost/fludb'
-# app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_DEFAULT
+app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_DEFAULT
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 app.debug = True
 
 db = SQLAlchemy(app)
@@ -198,6 +199,7 @@ def OneApi():
    user_location = getCity(lat,lon)
    country = user_location[0]
    code = user_location[1]
+   # print(code)
    # l = getNewsUpdates() #comment out
 
 
@@ -207,9 +209,14 @@ def OneApi():
 
    fdata = fludetail.query.first()
    d = json.loads(str(fdata)) #this is a dict
+   # print(d[0]['country'])
 
+   flu_country_data = getFluDataFrom(d,code)
+   # flu_country_data = selectFluCountry(code,d)
+
+ 
    #get flu users nearby
-   flu_users_nearby = FluUsersNearBy(uid,lat,lon,5)
+   flu_users_nearby = FluUsersNearBy(uid,lat,lon,1)
 
    #get location weather 
    weather = getWeather(lat,lon)
@@ -220,8 +227,8 @@ def OneApi():
       'AdUnitID':'ca-app-pub-3940256099942544/6300978111',
       'country':country,
       'code':code,
-      'fludata': d,
-      'news':l,
+      'fludata': flu_country_data,
+      # 'news':l,
       'fluNear':flu_users_nearby,
       'weather':weather,
 
@@ -245,6 +252,59 @@ def getCiti():
       'result': getLatLon(searchTerm),
    }
    return jsonify(out)
+
+
+def getFluDataFrom(myfludatalist,mylocationCode):
+   result_list=[]
+   #check if mylocationCode is in myfludatalist
+   for myfludata in myfludatalist:
+      if mylocationCode==myfludata['country']:
+         #add to result_list 
+         result_list.append(myfludata)
+   if not result_list:
+      # print('intheloop')
+   #if not ,
+   # update mylocationCode
+      mylocationCode = getFluContienent(mylocationCode) 
+      # print("loc is %s"%mylocationCode)
+      # and recheck myfludatalist
+      for otherfludata in myfludatalist:
+         # print(otherfludata['country'])
+         if mylocationCode == otherfludata['country']:
+            result_list.append(otherfludata)
+   return result_list
+
+def selectFluCountry(loc_code,fludata_dict_list):
+   fludata_aslist = []
+   for fludata in fludata_dict_list:
+      if fludata['country'] == loc_code:
+         fludata_aslist.append(fludata)
+         return fludata_aslist
+         
+
+
+
+def getFluContienent(loc_code):
+      
+   # North America xNo
+   # South America xSo
+   # Europe        xEu           
+   # Asia          xAs  
+   # Africa        xAf  
+   # Australia     xAu
+   # unknown       xx   
+
+   #check loc_code against keys in Cont_dict 
+   location_code = loc_code.upper()
+   if location_code in Cont_dict:
+      cont = Cont_dict.get(location_code)
+      
+      out_val = 'x'+cont[:2]
+      return out_val
+   else:
+      return 'xx'   
+
+
 
 
 if __name__ == "__main__":
