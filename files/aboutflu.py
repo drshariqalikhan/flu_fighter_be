@@ -133,7 +133,7 @@ def parseCsvFolder(folder_path,site_root):
 
             data_out = {
 
-                # 'country_name': code_to_county(country),
+                'country_name': code_to_county(country),
                 'country': country,
                 'alert':alert,
                 'trend':total_list,
@@ -157,42 +157,39 @@ def code_to_county(code):
 
 
 
-    if (code == 'au'):
-        
-
+    if (code == 'xAu'):
         return 'Australia'
-    if (code == 'bd'):
-        return 'Bangladesh'
+    if (code == 'xAf'):
+        return 'Central Africa'
+    if (code == 'xAs'):
+        return 'South-East Asia'
+    if (code == 'xEu'):
+        return 'South-East Europe'
+    if (code == 'xSo'):
+        return 'South America'
+    if (code == 'xNo'):
+        return 'North America'
 
+    if (code == 'us'):
+        return 'United States'        
+    if (code == 'br'):
+        return 'Brazil'
     if (code == 'cn'):
         return 'China'
-
+    if (code == 'ru'):
+        return 'Russia'
     if (code == 'id'):
         return 'Indonesia'
     if (code == 'in'):
         return 'India'
-
     if (code == 'jp'):
         return 'Japan'
-
     if (code == 'kr'):
         return 'South Korea'
-    if (code == 'lk'):
-        return 'Sri Lanka'
     if (code == 'my'):
         return 'Malaysia'
-    if (code == 'ph'):
-        return 'Phillipines'
     if (code == 'pk'):
         return 'Pakistan'
     if (code == 'sg'):
         return 'Singapore'
-    if (code == 'th'):
-        return 'Thailand'
-    if (code == 'kh'):
-        return 'Cambodia'
-    if (code == 'vn'):
-        return 'Viet nam'
-    if (code == 'np'):
-        return 'Nepal'
-
+   
