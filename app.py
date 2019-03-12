@@ -237,6 +237,33 @@ def OneApi():
    return jsonify(data_out)
 
 
+#todo create api to get just location based fludata
+@app.route('/e')
+def getFluData():
+
+   lat = request.args.get('lat')
+   lon = request.args.get('lon')
+   uid = request.args.get('uid')
+
+   user_location = getCity(lat,lon)
+   country = user_location[0]
+   code = user_location[1]
+
+   fdata = fludetail.query.first()
+   d = json.loads(str(fdata)) #this is a dict
+
+   flu_country_data = getFluDataFrom(d,code)
+    #get location weather 
+   weather = getWeather(lat,lon)
+
+   data_out={
+      'fludata': flu_country_data,
+      'weather':weather,
+   }
+
+   return jsonify(data_out)
+
+
 @app.route('/city')
 def getCiti():
 

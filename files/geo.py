@@ -10,6 +10,7 @@ def getCity(lat,lon):
         country_code = data.get('address').get('country_code')
         dat.append(country)
         dat.append(country_code)
+        
     except:
         pass
     return dat
