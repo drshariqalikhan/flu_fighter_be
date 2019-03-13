@@ -15,10 +15,10 @@ def getWeather(lat,lon):
     json_data_q = json.loads(rq.text)
 
     #get (8) 3hrly weather data
-    weather_list = [] 
+    weather_dict = {} 
     
     if 'list' in json_data_w:
-        weather_list = json_data_w
+        weather_dict = json_data_w
 
     #get citydata
     
@@ -116,7 +116,7 @@ def getWeather(lat,lon):
 
 
     weatherData= {
-        'forecast_list':weather_list,
+        'forecast_list':weather_dict,
         'now':now,
         'city':city,
         'air_quality_now':airq
