@@ -47,8 +47,8 @@ def getWeather(lat,lon):
     sunrise  = ''
     sunset = ''
 
-    if 'main' in json_data_n['weather']:
-        weather_desc = json_data_n['weather']['main']
+    if 'main' in json_data_n['weather'][0]:
+        weather_desc = json_data_n['weather'][0]['main']
     if  'icon' in  json_data_n['weather']:
         icon = json_data_n['weather']['icon']  
 
