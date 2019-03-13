@@ -39,7 +39,7 @@ def getWeather(lat,lon):
             if 'dt' in weather_element:
                 data_list.append(weather_element['dt'])
             else:
-                data_list.append('999')
+                data_list.append(999)
             dict = {
                 'temp':data_list[0],
                 'main':data_list[1],
