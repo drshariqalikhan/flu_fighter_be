@@ -67,7 +67,7 @@ def getWeather(lat,lon):
     if 'sunrise' in json_data_n['sys']:
         sunrise = json_data_n['sys']['sunrise']   
     if 'sunset' in json_data_n['sys']:
-        sunset = json_data_n['wind']['sunset']   
+        sunset = json_data_n['sys']['sunset']   
 
 
     now = {
