@@ -15,9 +15,73 @@ def getWeather(lat,lon):
     json_data_q = json.loads(rq.text)
 
     #get (8) 3hrly weather data
-    weather_list = json_data_w['list']
-    city = json_data_w['city']
+    weather_list = [] 
     
+    if 'list' in json_data_w['list']:
+        weather_list = json_data_w['list']
+
+    #get citydata
+    
+    country ='unknown'
+    name ='unknown'
+
+    if 'country' in json_data_w['city']:
+        country = json_data_w['city']['country']
+    if 'name' in  json_data_w['city']:
+        name = json_data_w['city']['name']
+    
+    city ={
+        'name':name,
+        'country':country
+    }
+
+    # get nowdata
+
+    weather_desc = ''
+    icon = '09d'
+    temp = ''
+    humidity = ''
+    temp_min = ''
+    temp_max = ''
+    wind_speed = ''
+    sunrise  = ''
+    sunset = ''
+
+    if 'main' in json_data_n['weather']:
+        weather_desc = json_data_n['weather']['main']
+    if  'icon' in  json_data_n['weather']:
+        icon = json_data_n['weather']['icon']  
+
+    if 'temp' in json_data_n['main']:
+        temp = json_data_n['main']['temp']
+    if 'humidity' in json_data_n['main']:
+        temp = json_data_n['main']['humidity']
+    if 'temp_min' in json_data_n['main']:
+        temp = json_data_n['main']['temp_min']        
+    if 'temp_max' in json_data_n['main']:
+        temp = json_data_n['main']['temp_max']
+
+    if 'speed' in json_data_n['wind']:
+        wind_speed = json_data_n['wind']['speed']    
+
+    if 'sunrise' in json_data_n['sys']:
+        sunrise = json_data_n['sys']['sunrise']   
+    if 'sunset' in json_data_n['sys']:
+        sunset = json_data_n['wind']['sunset']   
+
+
+    now = {
+        'weather_desc': weather_desc,
+        'icon':icon,
+        'temp':temp,
+        'humidity':humidity,
+        'temp_min':temp_min,
+        'temp_max':temp_max,
+        'wind_speed':wind_speed,
+        'sunrise':sunrise,
+        'sunset':sunset
+    }        
+
     #get airquality
     air_quality_dict = json_data_q['data']['iaqi']
 
@@ -53,7 +117,7 @@ def getWeather(lat,lon):
 
     weatherData= {
         'forecast_list':weather_list,
-        'now':json_data_n,
+        'now':now,
         'city':city,
         'air_quality_now':airq
     }
