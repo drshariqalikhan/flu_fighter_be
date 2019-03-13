@@ -36,15 +36,15 @@ def getWeather(lat,lon):
                 data_list.append(weather_element['weather'][0]['icon'])
             else:
                 data_list.append('10n')    
-            if 'dt_txt' in weather_element:
-                data_list.append(weather_element['dt_txt'])
+            if 'dt' in weather_element:
+                data_list.append(weather_element['dt'])
             else:
                 data_list.append('999')
             dict = {
                 'temp':data_list[0],
                 'main':data_list[1],
                 'icon':data_list[2],
-                'dt_txt':data_list[3]
+                'dt':data_list[3]
             }
             outer_list.append(dict)
 
