@@ -43,7 +43,8 @@ def getWeather(lat,lon):
             dict = {
                 'temp':data_list[0],
                 'main':data_list[1],
-                'dt_txt':data_list[2]
+                'icon':data_list[2],
+                'dt_txt':data_list[3]
             }
             outer_list.append(dict)
 
