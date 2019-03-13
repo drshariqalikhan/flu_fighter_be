@@ -17,8 +17,8 @@ def getWeather(lat,lon):
     #get (8) 3hrly weather data
     weather_list = [] 
     
-    if 'list' in json_data_w['list']:
-        weather_list = json_data_w['list']
+    if 'list' in json_data_w:
+        weather_list = json_data_w
 
     #get citydata
     
@@ -55,11 +55,11 @@ def getWeather(lat,lon):
     if 'temp' in json_data_n['main']:
         temp = json_data_n['main']['temp']
     if 'humidity' in json_data_n['main']:
-        temp = json_data_n['main']['humidity']
+        humidity = json_data_n['main']['humidity']
     if 'temp_min' in json_data_n['main']:
-        temp = json_data_n['main']['temp_min']        
+        temp_min = json_data_n['main']['temp_min']        
     if 'temp_max' in json_data_n['main']:
-        temp = json_data_n['main']['temp_max']
+        temp_max = json_data_n['main']['temp_max']
 
     if 'speed' in json_data_n['wind']:
         wind_speed = json_data_n['wind']['speed']    
