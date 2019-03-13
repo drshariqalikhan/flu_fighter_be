@@ -32,6 +32,10 @@ def getWeather(lat,lon):
                 data_list.append(weather_element['weather'][0]['main'])
             else:
                 data_list.append('999')
+            if 'icon' in weather_element['weather'][0]:
+                data_list.append(weather_element['weather'][0]['icon'])
+            else:
+                data_list.append('10n')    
             if 'dt_txt' in weather_element:
                 data_list.append(weather_element['dt_txt'])
             else:
