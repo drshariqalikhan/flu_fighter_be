@@ -39,13 +39,13 @@ def getWeather(lat,lon):
 
     weather_desc = ''
     icon = '09d'
-    temp = ''
-    humidity = ''
-    temp_min = ''
-    temp_max = ''
-    wind_speed = ''
-    sunrise  = ''
-    sunset = ''
+    temp = 999
+    humidity = 999
+    temp_min = 999
+    temp_max = 999
+    wind_speed = 999
+    sunrise  = 999
+    sunset = 999
 
     if 'main' in json_data_n['weather'][0]:
         weather_desc = json_data_n['weather'][0]['main']
@@ -85,11 +85,11 @@ def getWeather(lat,lon):
     #get airquality
     air_quality_dict = json_data_q['data']['iaqi']
 
-    co=''
-    o3=''
-    pm10=''
-    pm25=''
-    so2=''
+    co=999
+    o3=999
+    pm10=999
+    pm25=999
+    so2=999
 
     if 'co' in air_quality_dict:
         co = air_quality_dict['co']['v']
