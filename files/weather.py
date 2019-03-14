@@ -74,7 +74,7 @@ def getWeather(lat,lon):
     # get nowdata
 
     weather_desc = ''
-    icon = '09d'
+    icon = ''
     temp = 999
     humidity = 999
     temp_min = 999
@@ -85,7 +85,7 @@ def getWeather(lat,lon):
 
     if 'main' in json_data_n['weather'][0]:
         weather_desc = json_data_n['weather'][0]['main']
-    if  'icon' in  json_data_n['weather']:
+    if  'icon' in  json_data_n['weather'][0]:
         icon = json_data_n['weather']['icon']  
 
     if 'temp' in json_data_n['main']:
