@@ -40,6 +40,7 @@ class User(db.Model):
    lon = db.Column(db.Float)
    hasflu = db.Column(db.String(80))
 
+
    def __init__(self,uid,timestamp,lat,lon,hasflu):
 
       self.uid = uid
@@ -51,6 +52,31 @@ class User(db.Model):
    def __repr__(self):
       return '<uid %r>' %self.uid
 
+
+
+
+class SearchByUser(db.Model):
+   __tablename__ = 'search_table'
+
+   id = db.Column(db.Integer,primary_key = True)
+   uid = db.Column(db.String(80))
+   timestamp = db.Column(db.DateTime)
+   lat = db.Column(db.Float)
+   lon = db.Column(db.Float)
+
+
+   def __init__(self,uid,timestamp,lat,lon):
+
+      self.uid = uid
+      self.timestamp = timestamp
+      self.lat = lat
+      self.lon = lon
+
+   def __repr__(self):
+      return '<uid %r>' %self.uid
+
+
+  
 class flunews(db.Model):
 
 
@@ -116,6 +142,31 @@ def getUsers():
       return "%s deleted"%rows   
    
       
+@app.route('/q',methods = ['GET','POST'])
+def getSearchByUsers():
+   if request.method == 'GET':
+
+
+      user_list =[]
+      all_users = SearchByUser.query.all()
+      for user in all_users:
+
+
+         user_element ={
+            'Uid' :f"{user.uid}",
+            'Time':f"{user.timestamp}",
+            'Lat':f"{user.lat}",
+            'Lon':f"{user.lon}",
+            }
+         
+         user_list.append(user_element) 
+         
+      return jsonify(user_list)
+   if request.method == 'POST':
+      rows = SearchByUser.query.delete()
+      db.session.commit()
+      return "%s deleted"%rows   
+
 
 
 
@@ -185,16 +236,22 @@ def FluUsersNearBy(uiid,lat,lon,rad):
 @app.route('/f')
 def OneApi():
 
-  
+   usersearch = request.args.get('usersearch')
    lat = request.args.get('lat')
    lon = request.args.get('lon')
    hasflu = request.args.get('hasflu')
    uid = request.args.get('uid')
    timestamp = datetime.datetime.now()
-   # save to db table
-   user = User(uid,timestamp,lat,lon,hasflu)
-   db.session.add(user)
-   db.session.commit()
+   # if its not a usersearch save to db user table
+   if usersearch == 'false':
+      user = User(uid,timestamp,lat,lon,hasflu)
+      db.session.add(user)
+      db.session.commit()
+   #else save to searchByUser table   
+   if usersearch == 'true':
+      searchByUser = SearchByUser(uid,timestamp,lat,lon)
+      db.session.add(searchByUser)
+      db.session.commit()  
 
    user_location = getCity(lat,lon)
    country = user_location[0]
