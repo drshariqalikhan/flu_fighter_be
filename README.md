@@ -7,7 +7,7 @@ steps to create and deploy on heroku
 4. pip freeze > requirements.txt
 5. make flask apis, add sqlalchemy connection string 
 6. create postgresql table
-6a. make new model class -> run python -c "import app; app.makedb()" 
+6a. make new model class -> run python -c "import app; app.makedb()"  -> heroku run python -c "import app; app.makedb()"
 7. git init
 8. add to git repo
 9. create heroku app with heroku create
