@@ -203,7 +203,7 @@ def FluApi():
    db.session.add(myflu)
    db.session.commit()
    sendNotif("FLU FIGHTER ASIA - NEW FLU UPDATES!!")
-   return "Flu done"
+   return "Flu done thanks!"
 
 
 def sendNotif(data):
