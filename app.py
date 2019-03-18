@@ -18,9 +18,9 @@ from sqlalchemy import text #for raw sql
 app = Flask(__name__)
 
 DATABASE_DEFAULT = 'postgresql://postgres:14051976@localhost/fludb'
-# app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_DEFAULT
+app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_DEFAULT
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 app.debug = True
 
 db = SQLAlchemy(app)
@@ -248,7 +248,7 @@ def OneApi():
       db.session.add(user)
       db.session.commit()
    #else save to searchByUser table   
-   if usersearch == 'true':
+   elif usersearch == 'true':
       searchByUser = SearchByUser(uid,timestamp,lat,lon)
       db.session.add(searchByUser)
       db.session.commit()  
