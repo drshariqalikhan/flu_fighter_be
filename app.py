@@ -243,15 +243,16 @@ def OneApi():
    uid = request.args.get('uid')
    timestamp = datetime.datetime.now()
    # if its not a usersearch save to db user table
-   if usersearch == 'false':
+   if usersearch == "false":
       user = User(uid,timestamp,lat,lon,hasflu)
       db.session.add(user)
-      db.session.commit()
+      # db.session.commit()
    #else save to searchByUser table   
-   else:
+   if usersearch == "true":
       searchByUser = SearchByUser(uid,timestamp,lat,lon)
       db.session.add(searchByUser)
-      db.session.commit()  
+      # db.session.commit()  
+   db.session.commit()   
 
    user_location = getCity(lat,lon)
    country = user_location[0]
