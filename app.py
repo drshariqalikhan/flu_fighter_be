@@ -243,12 +243,13 @@ def OneApi():
    uid = request.args.get('uid')
    timestamp = datetime.datetime.now()
    # if its not a usersearch save to db user table
+   print(f"the string is :{usersearch}")
    if usersearch == "false":
       user = User(uid,timestamp,lat,lon,hasflu)
       db.session.add(user)
       # db.session.commit()
    #else save to searchByUser table   
-   if usersearch == "true":
+   else:
       searchByUser = SearchByUser(uid,timestamp,lat,lon)
       db.session.add(searchByUser)
       # db.session.commit()  
