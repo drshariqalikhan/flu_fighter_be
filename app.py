@@ -244,7 +244,7 @@ def OneApi():
    timestamp = datetime.datetime.now()
    # if its not a usersearch save to db user table
    print(f"the string is :{usersearch}")
-   if usersearch == "false":
+   if usersearch != "true":
       user = User(uid,timestamp,lat,lon,hasflu)
       db.session.add(user)
       # db.session.commit()
