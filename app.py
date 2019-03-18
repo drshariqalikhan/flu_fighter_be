@@ -248,7 +248,7 @@ def OneApi():
       db.session.add(user)
       db.session.commit()
    #else save to searchByUser table   
-   elif usersearch == 'true':
+   else:
       searchByUser = SearchByUser(uid,timestamp,lat,lon)
       db.session.add(searchByUser)
       db.session.commit()  
