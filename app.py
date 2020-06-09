@@ -14,7 +14,7 @@ from geopy import distance
 from files.weather import getWeather
 from sqlalchemy import text #for raw sql 
 
-#test
+#test2
 app = Flask(__name__)
 
 DATABASE_DEFAULT = 'postgresql://postgres:14051976@localhost/fludb'
