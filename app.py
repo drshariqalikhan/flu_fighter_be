@@ -347,7 +347,12 @@ def getCiti():
 @app.route('/cov')
 def getCovid():
    d,n = getCovidList()
-   return "hi2" 
+
+   return {
+      'Data':d,
+      'Num':n,
+      'TimeUpdated':datetime.datetime.now()
+   }
 
 
 def getFluDataFrom(myfludatalist,mylocationCode):
