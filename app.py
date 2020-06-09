@@ -9,7 +9,7 @@ from files.newsapi import getNewsUpdates
 from files.geo import getCity,getLatLon
 from files.aboutflu import parseCsvFolder
 from files.continent import Cont_dict
-# from files.covidListScaper import getCovidList
+from files.covidListScaper import getCovidList
 import datetime
 from geopy import distance
 from files.weather import getWeather
@@ -346,8 +346,8 @@ def getCiti():
 
 @app.route('/cov')
 def getCovid():
-   # d,n = getCovidList()
-   return "hi" 
+   d,n = getCovidList()
+   return "hi2" 
 
 
 def getFluDataFrom(myfludatalist,mylocationCode):
