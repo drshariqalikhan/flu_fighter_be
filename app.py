@@ -9,12 +9,13 @@ from files.newsapi import getNewsUpdates
 from files.geo import getCity,getLatLon
 from files.aboutflu import parseCsvFolder
 from files.continent import Cont_dict
+from files.covidListScaper import getCovidList
 import datetime
 from geopy import distance
 from files.weather import getWeather
 from sqlalchemy import text #for raw sql 
 
-#test2
+
 app = Flask(__name__)
 
 DATABASE_DEFAULT = 'postgresql://postgres:14051976@localhost/fludb'
@@ -340,6 +341,14 @@ def getCiti():
       'result': getLatLon(searchTerm),
    }
    return jsonify(out)
+
+
+#for covid places list
+
+@app.route('/cov')
+def getCovid():
+   d,n = getCovidList()
+   return (d,n) 
 
 
 def getFluDataFrom(myfludatalist,mylocationCode):
