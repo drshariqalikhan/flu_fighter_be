@@ -9,12 +9,11 @@ from files.newsapi import getNewsUpdates
 from files.geo import getCity,getLatLon
 from files.aboutflu import parseCsvFolder
 from files.continent import Cont_dict
-from files.covidListScaper import getCovidList
+# from files.covidListScaper import getCovidList
 import datetime
 from geopy import distance
 from files.weather import getWeather
 from sqlalchemy import text #for raw sql 
-
 
 app = Flask(__name__)
 
@@ -347,8 +346,8 @@ def getCiti():
 
 @app.route('/cov')
 def getCovid():
-   d,n = getCovidList()
-   return (d,n) 
+   # d,n = getCovidList()
+   return "hi" 
 
 
 def getFluDataFrom(myfludatalist,mylocationCode):
