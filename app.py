@@ -348,11 +348,12 @@ def getCiti():
 def getCovid():
    d,n = getCovidList()
 
-   return {
+   ret={
       'Data':d,
       'Num':n,
       'TimeUpdated':datetime.datetime.now()
-   }
+      }
+   return jsonify(ret)   
 
 
 def getFluDataFrom(myfludatalist,mylocationCode):
