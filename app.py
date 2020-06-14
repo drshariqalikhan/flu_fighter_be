@@ -11,6 +11,7 @@ from files.aboutflu import parseCsvFolder
 from files.continent import Cont_dict
 from files.covidListScaper import getCovidList
 import datetime
+import time
 from geopy import distance
 from files.weather import getWeather
 from sqlalchemy import text #for raw sql 
@@ -352,7 +353,7 @@ def getCovid():
       'Data':d,
       'Num':n,
       # 'TimeUpdated':datetime.datetime.utcnow()
-      'TimeUpdated':datetime.time.time()
+      'TimeUpdated':time.time()
 
       }
    return jsonify(ret)   
