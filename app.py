@@ -351,7 +351,7 @@ def getCovid():
    ret={
       'Data':d,
       'Num':n,
-      'TimeUpdated':datetime.datetime.now()
+      'TimeUpdated':datetime.datetime.utcnow()
       }
    return jsonify(ret)   
 
