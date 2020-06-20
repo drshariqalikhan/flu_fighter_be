@@ -345,18 +345,18 @@ def getCiti():
 
 #for covid places list
 
-@app.route('/cov')
-def getCovid():
-   d,n = getCovidList()
+# @app.route('/cov')
+# def getCovid():
+#    d,n = getCovidList()
 
-   ret={
-      'Data':d,
-      'Num':n,
-      # 'TimeUpdated':datetime.datetime.utcnow()
-      'TimeUpdated':time.time()
+#    ret={
+#       'Data':d,
+#       'Num':n,
+#       # 'TimeUpdated':datetime.datetime.utcnow()
+#       'TimeUpdated':time.time()
 
-      }
-   return jsonify(ret)   
+#       }
+#    return jsonify(ret)   
 
 
 
@@ -390,7 +390,7 @@ def getCovidInit():
 
 
 
-@app.route('/cov2')
+@app.route('/cov')
 def getCovidtwo():
    
    #read from the db
