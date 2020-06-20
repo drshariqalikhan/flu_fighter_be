@@ -377,8 +377,11 @@ def getCovidtwo():
    l = json.loads(str(data)) #this is a dict
    #check time
    currentTime = time.time()
+   print(l)
+   print(f"tyspe is {l['TimeUpdatedInt']}")
+
    lastTime = float(l['TimeUpdatedInt'][0])
-   print(f'last{lastTime} is type of {type(lastTime)}, cur {currentTime}')
+   # print(f'last{lastTime} is type of {type(lastTime)}, cur {currentTime}')
    if currentTime- lastTime > 45000:
       #its been a while
       d,n = getCovidList()
