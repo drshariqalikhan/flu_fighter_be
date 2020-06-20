@@ -181,12 +181,12 @@ def makedb():
 def NewsApi():
 
 
-   flunews.query.delete()
-   news_data = getNewsUpdates()     
-   y = json.dumps(news_data) #this is a json
-   mynews = flunews(y)
-   db.session.add(mynews)
-   db.session.commit()
+   # flunews.query.delete()
+   # news_data = getNewsUpdates()     
+   # y = json.dumps(news_data) #this is a json
+   # mynews = flunews(y)
+   # db.session.add(mynews)
+   # db.session.commit()
    return "news done"
    
 
@@ -377,10 +377,10 @@ def getCovidtwo():
    l = json.loads(str(data)) #this is a dict
    #check time
    currentTime = time.time()
-   print(l)
-   print(f"tyspe is {l['TimeUpdatedInt']}")
+   # print(l)
+   # print(f"tyspe is {l['TimeUpdatedInt']}")
 
-   lastTime = float(l['TimeUpdatedInt'][0])
+   lastTime =l['TimeUpdatedInt']
    # print(f'last{lastTime} is type of {type(lastTime)}, cur {currentTime}')
    if currentTime- lastTime > 45000:
       #its been a while
