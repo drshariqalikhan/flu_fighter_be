@@ -343,27 +343,6 @@ def getCiti():
    return jsonify(out)
 
 
-#for covid places list
-
-# @app.route('/cov')
-# def getCovid():
-#    d,n = getCovidList()
-
-#    ret={
-#       'Data':d,
-#       'Num':n,
-#       # 'TimeUpdated':datetime.datetime.utcnow()
-#       'TimeUpdated':time.time()
-
-#       }
-#    return jsonify(ret)   
-
-
-
-#
-
-
-#
 
 
 
@@ -398,7 +377,7 @@ def getCovidtwo():
    l = json.loads(str(data)) #this is a dict
    #check time
    currentTime = time.time()
-   if currentTime-l['TimeUpdatedInt']>45000:
+   if currentTime- float(l['TimeUpdatedInt'])>45000:
       #its been a while
       d,n = getCovidList()
 
