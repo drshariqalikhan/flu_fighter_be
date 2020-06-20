@@ -9,7 +9,7 @@ from files.newsapi import getNewsUpdates
 from files.geo import getCity,getLatLon
 from files.aboutflu import parseCsvFolder
 from files.continent import Cont_dict
-from files.covidListScaper import getCovidList
+from files.covidListScaper import getCovidList,getPlaces
 import datetime
 import time
 from geopy import distance
@@ -357,6 +357,86 @@ def getCovid():
 
       }
    return jsonify(ret)   
+
+
+
+#
+
+
+#
+
+
+
+@app.route('/covinit')
+def getCovidInit():
+   d,n = getCovidList()
+
+   ret={
+      'Data':d,
+      'Num':n,
+      # 'TimeUpdated':datetime.datetime.utcnow()
+      'TimeUpdatedInt':time.time()
+
+      }
+
+   #update the db
+   flunews.query.delete()
+   # news_data = getNewsUpdates()     
+   y = json.dumps(ret) #this is a json
+   mynews = flunews(y)
+   db.session.add(mynews)
+   db.session.commit()
+   return  "covid done" 
+
+
+
+@app.route('/cov2')
+def getCovidtwo():
+   
+   #read from the db
+   data = flunews.query.first()
+   l = json.loads(str(data)) #this is a dict
+   #check time
+   currentTime = time.time()
+   if currentTime-l['TimeUpdatedInt']>45000:
+      #its been a while
+      d,n = getCovidList()
+
+      ret={
+         'Data':d,
+         'Num':n,
+         # 'TimeUpdated':datetime.datetime.utcnow()
+         'TimeUpdatedInt':time.time()
+
+         }
+
+      #update the db
+      flunews.query.delete()
+      # news_data = getNewsUpdates()     
+      y = json.dumps(ret) #this is a json
+      mynews = flunews(y)
+      db.session.add(mynews)
+      db.session.commit()
+
+      newdatout ={
+         'Data':d,
+         'Num':n,
+         'TimeUpdated':time.time()
+
+      }
+
+      return jsonify(newdatout)   
+   else:
+      #recent
+      datout = {
+         'Data':l['Data'],
+         'Num':l['Num'],
+         'TimeUpdated':time.time()
+      }
+
+      return jsonify(datout)   
+
+
 
 
 def getFluDataFrom(myfludatalist,mylocationCode):
