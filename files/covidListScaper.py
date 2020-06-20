@@ -1,6 +1,10 @@
 from bs4 import BeautifulSoup
 import requests
 import re
+import json
+import time
+import os
+
 from geopy.geocoders import Nominatim
 url = "https://www.gov.sg/article/covid-19-public-places-visited-by-cases-in-the-community-during-infectious-period"
 
@@ -68,3 +72,38 @@ def getCovidList():
 
 # print(x)
 # print(y)
+
+
+def getPlaces(site_root):
+
+    CovfilePath = os.path.join(site_root,'cdata','covid.txt')
+    # CovfilePath = ('\\Users\\drsha\\Documents\\mycode\\flu_fighter_be\\cdata\\covid.txt')
+    #get getStoredPlaces() as Placeslist
+    with open(CovfilePath) as json_file:
+        data = json.load(json_file)
+        uploadTime = data['TimeUpdated']
+        currentTime = time.time()
+        print(f'old {uploadTime} and now {currentTime}')
+
+        #compare times
+        if currentTime - uploadTime > 45000:
+            #scrape page and update covid.txt data and updatetime
+            newData,newN = getCovidList()
+            updatedData ={
+                "Data":newData,
+                "TimeUpdated":currentTime,
+                "Num":newN
+            }
+            with open(CovfilePath,'w') as outfile:
+                json.dump(updatedData,outfile)
+
+            #return scarped data only 
+            return (updatedData['Data'],updatedData['Num'])
+        else:
+            #return data
+            return (data['Data'],data['Num'])
+
+
+# x,y = getPlaces(os.path.realpath(os.path.dirname(__file__)))
+
+# print(x)
