@@ -37,7 +37,7 @@ def getCovidList():
             except:
                 pass
             # q = "963 Jurong West Street 91"  
-        print(f'q value :  {q}')
+        # print(f'q value :  {q}')
         
         try:
             data.append(
