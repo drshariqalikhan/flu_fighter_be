@@ -7,7 +7,7 @@ import os
 
 from geopy.geocoders import Nominatim
 url = "https://www.gov.sg/article/covid-19-public-places-visited-by-cases-in-the-community-during-infectious-period"
-
+# "https://www.gov.sg/article/covid-19-public-places-visited-by-cases-in-the-community-during-infectious-period"
 
 
 
@@ -37,7 +37,7 @@ def getCovidList():
             except:
                 pass
             # q = "963 Jurong West Street 91"  
-        # print(q)
+        print(f'q value :  {q}')
         
         try:
             data.append(
@@ -57,12 +57,12 @@ def getCovidList():
                     'lat':None,
                     'lon':None,
                 })
-            print('err')
+            print(f'error in adding data {cols[0]}')
             pass    
 
     return (data,len(data))
 
-# x,y = getCovidList(main_url)
+# x,y = getCovidList()
 # out = {
 #     'D':x,
 #     'N':y
