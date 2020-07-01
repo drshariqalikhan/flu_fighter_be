@@ -5,7 +5,7 @@ import json
 import time
 import os
 
-from geopy.geocoders import Nominatim
+from geopy.geocoders import Nominatim,Pelias
 url = "https://www.gov.sg/article/covid-19-public-places-visited-by-cases-in-the-community-during-infectious-period"
 # "https://www.gov.sg/article/covid-19-public-places-visited-by-cases-in-the-community-during-infectious-period"
 
@@ -14,7 +14,8 @@ url = "https://www.gov.sg/article/covid-19-public-places-visited-by-cases-in-the
 def getCovidList():
     req = requests.get(url)
     soup = BeautifulSoup(req.text, "html.parser")
-    geolocator = Nominatim(user_agent="sg_safe_entry_plus")
+    # geolocator = Nominatim(user_agent="sg_safe_entry_plus")
+    geolocator = Pelias(user_agent="sg_safe_entry_plus")
 
 
     data = []
@@ -45,8 +46,8 @@ def getCovidList():
                     'date':cols[0],
                     'time':cols[1],
                     'place':cols[2].replace('\n',' '),
-                    # 'lat':(geolocator.geocode(f"{q},Singapore")).latitude,
-                    # 'lon':(geolocator.geocode(f"{q},Singapore")).longitude,
+                    'lat':(geolocator.geocode(f"{q},Singapore")).latitude,
+                    'lon':(geolocator.geocode(f"{q},Singapore")).longitude,
                 })
         except:
             data.append(
