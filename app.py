@@ -22,6 +22,7 @@ DATABASE_DEFAULT = 'postgresql://postgres:14051976@localhost/fludb'
 # app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_DEFAULT
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.debug = True
 
 db = SQLAlchemy(app)
