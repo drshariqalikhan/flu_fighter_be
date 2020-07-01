@@ -15,7 +15,7 @@ def getCovidList():
     req = requests.get(url)
     soup = BeautifulSoup(req.text, "html.parser")
     # geolocator = Nominatim(user_agent="sg_safe_entry_plus")
-    geolocator = Pelias(user_agent="sg_safe_entry_plus")
+    geolocator = Pelias(domain = 'http://speromedtech.com/',user_agent="sg_safe_entry_plus")
 
 
     data = []
