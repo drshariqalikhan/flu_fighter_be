@@ -45,8 +45,8 @@ def getCovidList():
                     'date':cols[0],
                     'time':cols[1],
                     'place':cols[2].replace('\n',' '),
-                    'lat':(geolocator.geocode(f"{q},Singapore")).latitude,
-                    'lon':(geolocator.geocode(f"{q},Singapore")).longitude,
+                    # 'lat':(geolocator.geocode(f"{q},Singapore")).latitude,
+                    # 'lon':(geolocator.geocode(f"{q},Singapore")).longitude,
                 })
         except:
             data.append(
