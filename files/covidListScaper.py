@@ -14,8 +14,8 @@ url = "https://www.gov.sg/article/covid-19-public-places-visited-by-cases-in-the
 def getCovidList():
     req = requests.get(url)
     soup = BeautifulSoup(req.text, "html.parser")
-    # geolocator = Nominatim(user_agent="sg_safe_entry_plus")
-    geolocator = Pelias(domain = 'http://speromedtech.com/',user_agent="sg_safe_entry_plus")
+    geolocator = Nominatim(user_agent="sg_safe_entry_plus")
+    # geolocator = Pelias(domain = 'http://speromedtech.com/',user_agent="sg_safe_entry_plus")
 
 
     data = []
@@ -41,13 +41,19 @@ def getCovidList():
         # print(f'q value :  {q}')
         
         try:
+            cloc_lat,cloc_lon,cloc_alt =  geolocator.geocode(f"{q},Singapore").point
+
             data.append(
                 {
                     'date':cols[0],
                     'time':cols[1],
                     'place':cols[2].replace('\n',' '),
-                    'lat':(geolocator.geocode(f"{q},Singapore")).latitude,
-                    'lon':(geolocator.geocode(f"{q},Singapore")).longitude,
+                    'lat' : cloc_lat,
+                    'lon' : cloc_lon
+                    # 'lat':(geolocator.geocode(query = 'f"{q},Singapore"')).latitude,
+                    # 'lon':(geolocator.geocode(query = 'f"{q},Singapore"')).longitude,
+                    # 'lat':(geolocator.geocode(f"{q},Singapore")).latitude,
+                    # 'lon':(geolocator.geocode(f"{q},Singapore")).longitude,
                 })
         except:
             data.append(
