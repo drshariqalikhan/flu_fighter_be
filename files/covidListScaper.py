@@ -120,10 +120,22 @@ def getCovidList():
 #map.html
 def displayCovidMap():
     #Define coordinates of where we want to center our map
-    boulder_coords = [40.015, -105.2705]
+    base_coords = [1.3521, 103.8198]
+    covData, num = getCovidList()
 
+    
     #Create the map
-    my_map = folium.Map(location = boulder_coords, zoom_start = 13)
+    my_map = folium.Map(location = base_coords, zoom_start = 13)
+
+    #add markers to map
+    for covdat in covData:
+        if covdat['lat'] != None:
+            locdat = [covdat['lat'],covdat['lon']]
+            locDetails = f"{covdat['place']} \n {covdat['date']}"
+            #add marker
+            folium.Marker(locdat, popup = locDetails).add_to(my_map)
+        else:
+            pass
 
     #Display the map
     return my_map._repr_html_()
