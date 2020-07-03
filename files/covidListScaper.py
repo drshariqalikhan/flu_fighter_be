@@ -133,7 +133,7 @@ def displayCovidMap(covData):
             locdat = [covdat['lat'],covdat['lon']]
             locDetails = f"{covdat['place']} visited on {covdat['date']} at {covdat['time']}"
             #add marker
-            folium.Circle(locdat,radius=1000,popup = locDetails).add_to(my_map)
+            folium.Marker(locdat,popup = locDetails).add_to(my_map)
         else:
             pass
 
