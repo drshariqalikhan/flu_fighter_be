@@ -4,7 +4,8 @@ import re
 import json
 import time
 import os
-
+import folium
+from folium.plugins import MarkerCluster
 from geopy.geocoders import Nominatim,Pelias
 url = "https://www.gov.sg/article/covid-19-public-places-visited-by-cases-in-the-community-during-infectious-period"
 # "https://www.gov.sg/article/covid-19-public-places-visited-by-cases-in-the-community-during-infectious-period"
@@ -114,3 +115,18 @@ def getCovidList():
 # x,y = getPlaces(os.path.realpath(os.path.dirname(__file__)))
 
 # print(x)
+
+
+#map.html
+def displayCovidMap():
+    #Define coordinates of where we want to center our map
+    boulder_coords = [40.015, -105.2705]
+
+    #Create the map
+    my_map = folium.Map(location = boulder_coords, zoom_start = 13)
+
+    #Display the map
+    return my_map._repr_html_()
+
+
+

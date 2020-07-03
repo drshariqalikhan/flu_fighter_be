@@ -9,7 +9,7 @@ from files.newsapi import getNewsUpdates
 from files.geo import getCity,getLatLon
 from files.aboutflu import parseCsvFolder
 from files.continent import Cont_dict
-from files.covidListScaper import getCovidList
+from files.covidListScaper import getCovidList,displayCovidMap
 import datetime
 import time
 from geopy import distance
@@ -368,6 +368,10 @@ def getCovidInit():
    db.session.commit()
    return  "covid done" 
 
+
+@app.route('/map')
+def getCovidmap():
+   return displayCovidMap()
 
 
 @app.route('/cov')
