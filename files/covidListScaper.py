@@ -118,10 +118,10 @@ def getCovidList():
 
 
 #map.html
-def displayCovidMap():
+def displayCovidMap(covData):
     #Define coordinates of where we want to center our map
     base_coords = [1.3521, 103.8198]
-    covData, num = getCovidList()
+    # covData, num = getCovidList()
 
     
     #Create the map

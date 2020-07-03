@@ -371,7 +371,11 @@ def getCovidInit():
 
 @app.route('/map')
 def getCovidmap():
-   return displayCovidMap()
+    #read from the db
+   data = flunews.query.first()
+   l = json.loads(str(data)) #this is a dict
+
+   return displayCovidMap(l['Data'])
 
 
 @app.route('/cov')
