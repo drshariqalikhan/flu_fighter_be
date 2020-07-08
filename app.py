@@ -9,7 +9,7 @@ from files.newsapi import getNewsUpdates
 from files.geo import getCity,getLatLon
 from files.aboutflu import parseCsvFolder
 from files.continent import Cont_dict
-from files.covidListScaper import getCovidList,displayCovidMap
+from files.covidListScaper import getCovidList,displayCovidMap,displayCovidMap2
 import datetime
 import time
 from geopy import distance
@@ -375,7 +375,8 @@ def getCovidmap():
    data = flunews.query.first()
    l = json.loads(str(data)) #this is a dict
 
-   return displayCovidMap(l['Data'])
+   # return displayCovidMap(l['Data'])
+   return displayCovidMap2(l['Data'])
 
 
 @app.route('/cov')

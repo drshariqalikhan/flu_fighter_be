@@ -15,7 +15,7 @@ url = "https://www.gov.sg/article/covid-19-public-places-visited-by-cases-in-the
 def getCovidList():
     req = requests.get(url)
     soup = BeautifulSoup(req.text, "html.parser")
-    geolocator = Nominatim(user_agent="sg_safe_entry_plus")
+    # geolocator = Nominatim(user_agent="sg_safe_entry_plus")
     # geolocator = Pelias(domain = 'http://speromedtech.com/',user_agent="sg_safe_entry_plus")
 
 
@@ -42,15 +42,15 @@ def getCovidList():
         # print(f'q value :  {q}')
         
         try:
-            cloc_lat,cloc_lon,cloc_alt =  geolocator.geocode(f"{q},Singapore").point
+            # cloc_lat,cloc_lon,cloc_alt =  geolocator.geocode(f"{q},Singapore").point
 
             data.append(
                 {
                     'date':cols[0],
                     'time':cols[1],
                     'place':cols[2].replace('\n',' '),
-                    'lat' : cloc_lat,
-                    'lon' : cloc_lon
+                    # 'lat' : cloc_lat,
+                    # 'lon' : cloc_lon
                     # 'lat':(geolocator.geocode(query = 'f"{q},Singapore"')).latitude,
                     # 'lon':(geolocator.geocode(query = 'f"{q},Singapore"')).longitude,
                     # 'lat':(geolocator.geocode(f"{q},Singapore")).latitude,
@@ -62,8 +62,8 @@ def getCovidList():
                     'date':cols[0],
                     'time':cols[1],
                     'place':cols[2].replace('\n',' '),
-                    'lat':None,
-                    'lon':None,
+                    # 'lat':None,
+                    # 'lon':None,
                 })
             print(f'error in adding data {cols[0]}')
             pass    
@@ -122,7 +122,7 @@ def displayCovidMap(covData):
     #Define coordinates of where we want to center our map
     base_coords = [1.3521, 103.8198]
     # covData, num = getCovidList()
-
+    # geolocator = Nominatim(user_agent="sg_safe_entry_plus")
     
     #Create the map
     my_map = folium.Map(location = base_coords, zoom_start = 13)
@@ -135,6 +135,33 @@ def displayCovidMap(covData):
             # locDetails = f"{covdat['place']} visited on {covdat['date']} at {covdat['time']}"
             #add marker
             folium.Marker(locdat,popup = locDetails).add_to(my_map)
+        else:
+            pass
+
+    #Display the map
+    return my_map._repr_html_()
+
+
+
+#map.html
+def displayCovidMap2(covData):
+    #Define coordinates of where we want to center our map
+    base_coords = [1.3521, 103.8198]
+    # covData, num = getCovidList()
+    geolocator = Nominatim(user_agent="sg_safe_entry_plus")
+    
+    #Create the map
+    my_map = folium.Map(location = base_coords, zoom_start = 13)
+
+    #add markers to map
+    for covdat in covData:
+        if covdat['place'] != None:
+            # locdat = [covdat['lat'],covdat['lon']]
+            locdat_lat,locdat_lon,locdat_alt = geolocator.geocode(f"{covdat['place']},Singapore").point
+            locDetails = f"<h1>{covdat['place']} visited on {covdat['date']} at {covdat['time']}</h1>"
+            # locDetails = f"{covdat['place']} visited on {covdat['date']} at {covdat['time']}"
+            #add marker
+            folium.Marker((locdat_lat,locdat_lon),popup = locDetails).add_to(my_map)
         else:
             pass
 
