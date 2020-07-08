@@ -156,8 +156,15 @@ def displayCovidMap2(covData):
     #add markers to map
     for covdat in covData:
         if covdat['place'] != None:
+            try:
+                q = re.search('\(([^)]+)', covdat['place']).group(1)
+            except:
+                try:
+                    q=re.search('(\d+\w+ \w+ \w+ \w+)',covdat['place']).group(1)
+                except:
+                    pass
             # locdat = [covdat['lat'],covdat['lon']]
-            locdat_lat,locdat_lon,locdat_alt = geolocator.geocode(f"{covdat['place']},Singapore").point
+            locdat_lat,locdat_lon,locdat_alt = geolocator.geocode(f"{q},Singapore").point
             locDetails = f"<h1>{covdat['place']} visited on {covdat['date']} at {covdat['time']}</h1>"
             # locDetails = f"{covdat['place']} visited on {covdat['date']} at {covdat['time']}"
             #add marker
